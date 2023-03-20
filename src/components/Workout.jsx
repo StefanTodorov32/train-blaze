@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card, Button, Table, Modal, Spinner } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 import { ExerciseCard } from './ExerciseCard';
 import axios from 'axios';
+import { Navigate, useParams } from 'react-router-dom';
 const Workout = () => {
     const [show, setShow] = useState(false);
     const [spinner, setSpinner] = useState(true)
@@ -10,6 +10,7 @@ const Workout = () => {
     const handleShow = () => setShow(true);
     const { programId } = useParams()
     const [workout, setWorkout] = useState([])
+    const [toNavigate, setToNavigate ] = useState(false)
     useEffect(() => {
         axios.get(`http://localhost:3030/jsonstore/workout/${programId}`)
             .then(data => {
@@ -18,7 +19,13 @@ const Workout = () => {
             })
             .catch(error => console.log(error));
     }, [])
-    
+
+    const handleDeleteWorkout = () => {
+        axios.delete(`http://localhost:3030/jsonstore/workout/${programId}`)
+            .then(setToNavigate(true))
+
+    }
+
 
     return (
         <div>
@@ -27,13 +34,16 @@ const Workout = () => {
                     <Spinner animation="border" />
                 </div>
             }
-
+            {toNavigate && <Navigate to="/training-list"/>}
 
             <Container style={{ marginTop: "20px" }}>
                 <Row>
                     <Col>
                         <h1>{workout.workoutTitle}</h1>
                         <p>{workout.workoutDescription}</p>
+                    </Col>
+                    <Col>
+                        <Button variant="primary" onClick={handleDeleteWorkout}>Delete</Button>
                     </Col>
                 </Row>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>

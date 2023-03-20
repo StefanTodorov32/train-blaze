@@ -1,11 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Form, Row, Col, ListGroup, CloseButton } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-export const CreateProgram = () => {
+export const EditProgram = () => {
+    const { programId } = useParams()
     const navigate = useNavigate()
     const [program, setProgram] = useState({
+
         workoutImage: "",
         workoutTitle: "",
         workoutDescription: "",
@@ -17,10 +19,9 @@ export const CreateProgram = () => {
     }
     const handleProgramSubmit = (event) => {
         event.preventDefault()
-        axios.post("http://localhost:3030/jsonstore/workout", program)
+        axios.put("http://localhost:3030/jsonstore/workout/" + programId, program)
             .then(data => console.log(data))
-            .then(navigate("/training-list"))
-
+            .then(navigate(`/training-list/program/${programId}`))
     }
 
     const [newExercise, setNewExercise] = useState({ name: '', sets: '', reps: '', description: '', videoLink: "", videoImage: "" });
