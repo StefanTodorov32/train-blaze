@@ -7,8 +7,7 @@ export const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(email)
-        console.log(password)
+        //TODO: Fetch request!
     }
     return (
         <div style={{

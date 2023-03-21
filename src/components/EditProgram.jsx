@@ -14,14 +14,12 @@ export const EditProgram = () => {
     const handleProgramSubmit = (event) => {
         event.preventDefault()
         axios.put("http://localhost:3030/jsonstore/workout/" + programId, program)
-            .then(data => console.log(data))
             .then(navigate(`/training-list/program/${programId}`))
     }
 
     useEffect(() => {
         axios.get(`http://localhost:3030/jsonstore/workout/${programId}`)
             .then(data => setProgram(data.data))
-            .catch(err => console.error(err))
     }, [])
     const [newExercise, setNewExercise] = useState({ name: '', sets: '', reps: '', description: '', videoLink: "", videoImage: "" });
     const handleAddExercise = () => {

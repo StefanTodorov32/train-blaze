@@ -1,16 +1,12 @@
 import React from 'react'
-import { Modal, Container } from 'react-bootstrap';
-export const ErrorOverlay = ({ message }) => {
+import { Alert } from 'react-bootstrap'
+export const ErrorOverlay = ({ message, index }) => {
+    const marginCalc = index * 80;
     return (
-        <Modal show={true}>
-            <Modal.Header>
-                <Modal.Title>Error</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Container>
-                    <p>{message}</p>
-                </Container>
-            </Modal.Body>
-        </Modal>
+        <div style={{ width: "400px", marginLeft: "20px", marginTop: marginCalc + "px" }}>
+            <Alert variant={"danger"}>
+                {message}
+            </Alert>
+        </div>
     )
 }

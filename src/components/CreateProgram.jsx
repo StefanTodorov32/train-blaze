@@ -18,7 +18,6 @@ export const CreateProgram = () => {
     const handleProgramSubmit = (event) => {
         event.preventDefault()
         axios.post("http://localhost:3030/jsonstore/workout", program)
-            .then(data => console.log(data))
             .then(navigate("/training-list"))
 
     }

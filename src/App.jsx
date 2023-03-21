@@ -30,7 +30,10 @@ function App() {
     } catch (e) {
       setErrorMessages(state => ([...state, e.response.data.message]))
       setTimeout(() => {
-        setErrorMessages([])
+        setErrorMessages(state => {
+          state.shift()
+          return [...state]
+        })
       }, 2000)
     }
 
@@ -46,7 +49,11 @@ function App() {
   return (
     <AuthContext.Provider value={contextAuth}>
       <Navigation />
-      {errorMessages.map((e, i) => <ErrorOverlay key={i} message={e} />)}
+      {errorMessages.map((e, i) =>
+      <div style={{display: "flex", flexDirection: "column", position: "fixed", top: '70px'}}>
+        <ErrorOverlay key={i} message={e} index={i}/>
+      </div>
+      )}
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/training-list' element={<TrainingList />}></Route>
@@ -56,6 +63,7 @@ function App() {
         <Route path='/training-list/program/:programId' element={<Workout />}></Route>
         <Route path='/training-list/program/:programId/edit' element={<EditProgram />}></Route>
       </Routes>
+
     </AuthContext.Provider>
   )
 }

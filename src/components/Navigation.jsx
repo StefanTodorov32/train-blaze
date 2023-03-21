@@ -11,7 +11,6 @@ import { LinkContainer } from 'react-router-bootstrap'
 const Navigation = () => {
 
     const { isAuthenticated, userEmail } = useContext(AuthContext)
-    console.log(isAuthenticated)
     return (
         <Navbar bg="dark" expand="lg" variant='dark'>
             <Container >
