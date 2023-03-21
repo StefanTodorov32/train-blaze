@@ -13,7 +13,7 @@ export const TrainingList = () => {
     }, [])
     return (
 
-        <div style={{ padding: "72px", display: "flex", justifyContent: "center" }}>
+        <div style={{ padding: "72px", display: "flex", justifyContent: "center"}}>
             <Row xs={1} md={2} className="g-4">
                 {workouts.map(u => <TrainingListCard key={u._id} {...u} />)}
             </Row>

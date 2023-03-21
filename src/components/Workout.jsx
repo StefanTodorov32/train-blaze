@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Card, Button, Table, Modal, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Button, Table, Spinner } from 'react-bootstrap';
 import { ExerciseCard } from './ExerciseCard';
 import axios from 'axios';
 import { Navigate, useParams } from 'react-router-dom';
@@ -10,7 +10,8 @@ const Workout = () => {
     const handleShow = () => setShow(true);
     const { programId } = useParams()
     const [workout, setWorkout] = useState([])
-    const [toNavigate, setToNavigate ] = useState(false)
+    const [toNavigateDelete, setToNavigateDelete] = useState(false)
+    const [toNavigateEdit, setToNavigateEdit] = useState(false)
     useEffect(() => {
         axios.get(`http://localhost:3030/jsonstore/workout/${programId}`)
             .then(data => {
@@ -22,7 +23,7 @@ const Workout = () => {
 
     const handleDeleteWorkout = () => {
         axios.delete(`http://localhost:3030/jsonstore/workout/${programId}`)
-            .then(setToNavigate(true))
+            .then(setToNavigateDelete(true))
 
     }
 
@@ -34,7 +35,8 @@ const Workout = () => {
                     <Spinner animation="border" />
                 </div>
             }
-            {toNavigate && <Navigate to="/training-list"/>}
+            {toNavigateDelete && <Navigate to="/training-list" />}
+            {toNavigateEdit && <Navigate to={`/training-list/program/${programId}/edit`} />}
 
             <Container style={{ marginTop: "20px" }}>
                 <Row>
@@ -44,6 +46,8 @@ const Workout = () => {
                     </Col>
                     <Col>
                         <Button variant="primary" onClick={handleDeleteWorkout}>Delete</Button>
+                        <Button variant="primary" onClick={() => setToNavigateEdit(true)}>Edit</Button>
+
                     </Col>
                 </Row>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>

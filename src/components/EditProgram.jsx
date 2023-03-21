@@ -1,18 +1,12 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Row, Col, ListGroup, CloseButton } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 
 export const EditProgram = () => {
     const { programId } = useParams()
     const navigate = useNavigate()
-    const [program, setProgram] = useState({
-
-        workoutImage: "",
-        workoutTitle: "",
-        workoutDescription: "",
-        workoutExercises: [],
-    })
+    const [program, setProgram] = useState(null)
     const handleInputProgramChange = (event) => {
         const { name, value } = event.target
         setProgram({ ...program, [name]: value })
@@ -24,6 +18,11 @@ export const EditProgram = () => {
             .then(navigate(`/training-list/program/${programId}`))
     }
 
+    useEffect(() => {
+        axios.get(`http://localhost:3030/jsonstore/workout/${programId}`)
+            .then(data => setProgram(data.data))
+            .catch(err => console.error(err))
+    }, [])
     const [newExercise, setNewExercise] = useState({ name: '', sets: '', reps: '', description: '', videoLink: "", videoImage: "" });
     const handleAddExercise = () => {
         const newExercises = [...program.workoutExercises, newExercise];
@@ -56,7 +55,7 @@ export const EditProgram = () => {
                         placeholder="Workout image"
                         name='workoutImage'
                         onChange={handleInputProgramChange}
-                        value={program.workoutImage}
+                        value={program?.workoutImage}
                     />
                 </Form.Group>
                 <Row className="mb-3">
@@ -67,7 +66,7 @@ export const EditProgram = () => {
                             placeholder="Workout title"
                             name='workoutTitle'
                             onChange={handleInputProgramChange}
-                            value={program.workoutTitle} />
+                            value={program?.workoutTitle} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridWorkoutDescription">
                         <Form.Label>Description</Form.Label>
@@ -76,7 +75,7 @@ export const EditProgram = () => {
                             placeholder="Workout description"
                             name='workoutDescription'
                             onChange={handleInputProgramChange}
-                            value={program.workoutDescription}
+                            value={program?.workoutDescription}
                         />
                     </Form.Group>
                 </Row>
@@ -88,7 +87,7 @@ export const EditProgram = () => {
                             <Form.Control
                                 placeholder="Exercise name"
                                 name="name"
-                                value={newExercise.name}
+                                value={newExercise?.name}
                                 onChange={handleInputExerciseChange}
                             />
                             <Form.Label>Exercise description</Form.Label>
@@ -96,7 +95,7 @@ export const EditProgram = () => {
                             <Form.Control
                                 placeholder="Description"
                                 name="description"
-                                value={newExercise.description}
+                                value={newExercise?.description}
                                 onChange={handleInputExerciseChange}
                             />
                         </Col>
@@ -106,7 +105,7 @@ export const EditProgram = () => {
                             <Form.Control
                                 placeholder="Reps"
                                 name="reps"
-                                value={newExercise.reps}
+                                value={newExercise?.reps}
                                 onChange={handleInputExerciseChange}
                             />
                             <Form.Label>Exercise sets</Form.Label>
@@ -114,7 +113,7 @@ export const EditProgram = () => {
                             <Form.Control
                                 placeholder="Sets"
                                 name="sets"
-                                value={newExercise.sets}
+                                value={newExercise?.sets}
                                 onChange={handleInputExerciseChange}
                             />
                         </Col>
@@ -124,7 +123,7 @@ export const EditProgram = () => {
                             <Form.Control
                                 placeholder="Video Link"
                                 name="videoLink"
-                                value={newExercise.videoLink}
+                                value={newExercise?.videoLink}
                                 onChange={handleInputExerciseChange}
                             />
                             <Form.Label>Exercise Image</Form.Label>
@@ -132,7 +131,7 @@ export const EditProgram = () => {
                             <Form.Control
                                 placeholder="Video Image"
                                 name="videoImage"
-                                value={newExercise.videoImage}
+                                value={newExercise?.videoImage}
                                 onChange={handleInputExerciseChange}
                             />
                         </Col>
@@ -144,7 +143,7 @@ export const EditProgram = () => {
                     </Row>
                 </ListGroup>
                 <ListGroup>
-                    {program.workoutExercises.map((exercise, index) => (
+                    {program?.workoutExercises?.map((exercise, index) => (
                         <ListGroup.Item style={{ margin: "0 0 20px 0" }} key={index}>
                             <Row>
                                 <Col>

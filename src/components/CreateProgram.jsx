@@ -46,7 +46,7 @@ export const CreateProgram = () => {
 
 
     return (
-        <div style={{ margin: "30px", padding: "10px", border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "20px" }}>
+        <div style={{ margin: "30px", padding: "10px", border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "20px", backgroundColor: "f2f2f2" }}>
             <Form onSubmit={handleProgramSubmit}>
                 <Form.Group className="mb-3" controlId="formGridWorkoutImage">
                     <Form.Label>Workout Image</Form.Label>
