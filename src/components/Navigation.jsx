@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
 const Navigation = () => {
 
-    const { isAuthenticated, userEmail } = useContext(AuthContext)
+    const { isAuthenticated } = useContext(AuthContext)
     return (
         <Navbar bg="dark" expand="lg" variant='dark'>
             <Container >
@@ -23,14 +23,16 @@ const Navigation = () => {
                                 Home
                             </Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="/training-list">
+                        <LinkContainer to="/workout-list">
                             <Nav.Link >Traning List</Nav.Link>
                         </LinkContainer>
                         {isAuthenticated && <>
-                            <LinkContainer to="/create/program">
-                                <Nav.Link >Create Program</Nav.Link>
+                            <LinkContainer to="/create/workout">
+                                <Nav.Link >Create Workout</Nav.Link>
                             </LinkContainer>
-                            <Nav.Link >Logout</Nav.Link>
+                            <LinkContainer to="/auth/logout">
+                                <Nav.Link >Logout</Nav.Link>
+                            </LinkContainer>
                             <Nav.Link >Profile</Nav.Link>
                         </>}
                         {!isAuthenticated && <>
@@ -41,6 +43,7 @@ const Navigation = () => {
                                 <Nav.Link >Register</Nav.Link>
                             </LinkContainer>
                         </>}
+                        asdasd
                     </Nav>
                 </Navbar.Collapse>
                 <Form className="d-flex">

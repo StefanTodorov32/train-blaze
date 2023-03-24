@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Card, Col, Row } from 'react-bootstrap'
+import { Button, Card, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-export const TrainingListCard = ({ workoutImage, workoutTitle, workoutDescription, _id }) => {
+export const WorkoutListCard = ({ workoutImage, workoutTitle, workoutDescription, _id }) => {
     return (
         <Col>
             <Card>
@@ -13,8 +13,8 @@ export const TrainingListCard = ({ workoutImage, workoutTitle, workoutDescriptio
                     <Card.Text>
                         {workoutDescription}
                     </Card.Text>
-                    <LinkContainer to={`/training-list/program/${_id}`}>
-                        <Button variant="primary">Primary</Button>
+                    <LinkContainer to={`/workout-list/workout/${_id}`}>
+                        <Button variant="primary">Give it a go!</Button>
                     </LinkContainer>
                 </Card.Body>
             </Card>

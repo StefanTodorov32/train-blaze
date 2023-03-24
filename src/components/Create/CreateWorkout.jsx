@@ -1,60 +1,70 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Form, Row, Col, ListGroup, CloseButton } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-
-export const CreateProgram = () => {
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
+import { validationRegexes } from '../../utils/errorUtils'
+export const CreateWorkout = () => {
+    const { token } = useContext(AuthContext)
     const navigate = useNavigate()
-    const [program, setProgram] = useState({
+    const [workout, setWorkout] = useState({
         workoutImage: "",
         workoutTitle: "",
         workoutDescription: "",
         workoutExercises: [],
     })
-    const handleInputProgramChange = (event) => {
+    const handleInputWorkoutChange = (event) => {
         const { name, value } = event.target
-        setProgram({ ...program, [name]: value })
+        setWorkout({ ...workout, [name]: value })
     }
-    const handleProgramSubmit = (event) => {
+    const handleWorkoutSubmit = async (event) => {
         event.preventDefault()
-        axios.post("http://localhost:3030/jsonstore/workout", program)
-            .then(navigate("/training-list"))
-
+        await fetch("http://localhost:3030/data/workout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Authorization": token
+            },
+            body: JSON.stringify(workout)
+        })
+        navigate("/workout-list")
     }
 
     const [newExercise, setNewExercise] = useState({ name: '', sets: '', reps: '', description: '', videoLink: "", videoImage: "" });
     const handleAddExercise = () => {
-        const newExercises = [...program.workoutExercises, newExercise];
+        const newExercises = [...workout.workoutExercises, newExercise];
         if (newExercise.name.trim() == "" || newExercise.sets.trim() == "" || newExercise.reps.trim() == "" || newExercise.description.trim() == "" || newExercise.videoLink.trim() == "") {
             return alert("Empty Excercise fields!")
         }
-        setProgram({ ...program, workoutExercises: newExercises })
+        if (!validationRegexes.imageUrl.test(newExercise.videoImage)) {
+            return handleErrorMessages(setErrorMessages, "Invalid Exercise ImageUrl!")
+        }
+        if (!validationRegexes.youtubeUrl.test(newExercise.videoLink)) {
+            return handleErrorMessages(setErrorMessages, "Invalid Exercise Youtube Link!")
+        }
+        setWorkout({ ...workout, workoutExercises: newExercises })
         setNewExercise({ name: '', sets: '', reps: '', description: "", videoLink: "", videoImage: "" });
     };
-
-
     const handleInputExerciseChange = (event) => {
         const { name, value } = event.target;
         setNewExercise({ ...newExercise, [name]: value });
     };
     const handleDeleteExercise = (index) => {
-        const updatedExercises = [...program.workoutExercises];
+        const updatedExercises = [...workout.workoutExercises];
         updatedExercises.splice(index, 1);
-        setProgram({ ...program, workoutExercises: updatedExercises });
+        setWorkout({ ...workout, workoutExercises: updatedExercises });
     };
-
-
     return (
         <div style={{ margin: "30px", padding: "10px", border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "20px", backgroundColor: "f2f2f2" }}>
-            <Form onSubmit={handleProgramSubmit}>
+            <Form onSubmit={handleWorkoutSubmit}>
                 <Form.Group className="mb-3" controlId="formGridWorkoutImage">
                     <Form.Label>Workout Image</Form.Label>
                     <Form.Control
                         required
                         placeholder="Workout image"
                         name='workoutImage'
-                        onChange={handleInputProgramChange}
-                        value={program.workoutImage}
+                        onChange={handleInputWorkoutChange}
+                        value={workout.workoutImage}
                     />
                 </Form.Group>
                 <Row className="mb-3">
@@ -62,10 +72,10 @@ export const CreateProgram = () => {
                         <Form.Label>Workout Title</Form.Label>
                         <Form.Control
                             required
-                            placeholder="Workout title"
                             name='workoutTitle'
-                            onChange={handleInputProgramChange}
-                            value={program.workoutTitle} />
+                            onChange={handleInputWorkoutChange}
+                            placeholder="Workout title"
+                            value={workout.workoutTitle} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridWorkoutDescription">
                         <Form.Label>Description</Form.Label>
@@ -73,8 +83,8 @@ export const CreateProgram = () => {
                             required
                             placeholder="Workout description"
                             name='workoutDescription'
-                            onChange={handleInputProgramChange}
-                            value={program.workoutDescription}
+                            onChange={handleInputWorkoutChange}
+                            value={workout.workoutDescription}
                         />
                     </Form.Group>
                 </Row>
@@ -142,7 +152,7 @@ export const CreateProgram = () => {
                     </Row>
                 </ListGroup>
                 <ListGroup>
-                    {program.workoutExercises.map((exercise, index) => (
+                    {workout.workoutExercises.map((exercise, index) => (
                         <ListGroup.Item style={{ margin: "0 0 20px 0" }} key={index}>
                             <Row>
                                 <Col>
@@ -184,13 +194,8 @@ export const CreateProgram = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
-
-
-
-
                 <Button variant="primary" type="submit">
-                    Submit Program
+                    Submit Workout
                 </Button>
             </Form>
 

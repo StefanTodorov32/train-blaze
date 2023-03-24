@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
+import { useForm } from '../hooks/useForm';
 export const Register = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        //TODO: Fetch request!
-    }
+    const { onRegisterSubmit } = useContext(AuthContext)
+    const { values, changeHandler, onSubmit } = useForm({
+        email: "",
+        password: "",
+        rePassword: ""
+    }, onRegisterSubmit)
     return (
         <div style={{
             display: "flex",
@@ -24,21 +25,21 @@ export const Register = () => {
                 boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
 
             }}
-                onSubmit={handleSubmit}
+                onSubmit={onSubmit}
             >
                 <h1 style={{ textAlign: "center" }}>Register</h1>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email}/>
+                    <Form.Control type="email" placeholder="Enter email" name="email" onChange={changeHandler} value={values.email} />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label style={{ marginTop: "10px" }}>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password}/>
+                    <Form.Control type="password" placeholder="Password" name="password" onChange={changeHandler} value={values.password} />
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="formBasicRePassword">
                     <Form.Label style={{ marginTop: "10px" }}>Repeat Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password}/>
+                    <Form.Control type="password" placeholder="Password" name="rePassword" onChange={changeHandler} value={values.rePassword} />
                 </Form.Group>
                 <div style={{ display: "flex", justifyContent: "space-between", alignContent: "center", marginTop: "10px" }}>
                     <Form.Check
@@ -46,7 +47,7 @@ export const Register = () => {
                         id="custom-switch"
                         label="Remember me"
                     />
-                    <p>Don't have an account? <Link to="/auth/register" style={{ textDecoration: "none", color: "blue" }}>Register</Link></p>
+                    <p>Already registered? <Link to="/auth/login" style={{ textDecoration: "none", color: "blue" }}>Login</Link></p>
                 </div>
                 <Button variant="primary" type="submit" style={{
                     backgroundColor: "#007bff",

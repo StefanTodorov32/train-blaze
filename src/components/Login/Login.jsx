@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useContext } from 'react';
-import { useForm } from '../hooks/useForm';
+import { useForm } from '../../hooks/useForm';
 export const Login = () => {
     const { onLoginSubmit } = useContext(AuthContext)
     const { values, changeHandler, onSubmit } = useForm({
@@ -31,12 +31,12 @@ export const Login = () => {
                 <h1 style={{ textAlign: "center" }}>Login</h1>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" name='email' onChange={changeHandler} value={values["email"]} />
+                    <Form.Control type="email" placeholder="Enter email" name='email' onChange={changeHandler} value={values.email} />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label style={{ marginTop: "10px" }}>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" name='password' onChange={changeHandler} value={values["password"]} />
+                    <Form.Control type="password" placeholder="Password" name='password' onChange={changeHandler} value={values.password} />
                 </Form.Group>
                 <div style={{ display: "flex", justifyContent: "space-between", alignContent: "center", marginTop: "10px" }}>
                     <Form.Check

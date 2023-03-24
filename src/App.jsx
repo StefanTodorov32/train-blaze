@@ -1,71 +1,103 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
 import {
-  Route,
-  Routes,
-  useNavigate
+    Route,
+    Routes,
+    useNavigate
 } from "react-router-dom";
-import Home from './components/Home';
-import { TrainingList } from './components/TrainingList';
+import Home from './components/Home/Home';
+import { WorkoutList } from './components/WorkoutList';
 import Workout from './components/Workout';
-import { CreateProgram } from './components/CreateProgram';
-import { EditProgram } from './components/EditProgram';
+import { CreateWorkout } from './components/Create/CreateWorkout';
+import { EditWorkout } from './components/Edit/EditWorkout';
 import "./App.css"
-import { Login } from './components/Login';
+import { Login } from './components/Login/Login';
 import { Register } from './components/Register';
 import { AuthContext } from './contexts/AuthContext';
 import { useState } from 'react';
 import * as authService from "./services/authServices"
 import { ErrorOverlay } from './components/ErrorOverlay';
+import { Logout } from './components/Logout';
+import { ErrorContext } from './contexts/ErrorContext';
+import { handleErrorMessages } from './utils/errorUtils';
 function App() {
-  const navigate = useNavigate()
-  const [auth, setAuth] = useState({})
-  const [errorMessages, setErrorMessages] = useState([])
+    const navigate = useNavigate()
+    const [auth, setAuth] = useState({})
+    const [errorMessages, setErrorMessages] = useState([])
 
-  const onLoginSubmit = async (data) => {
-    try {
-      const result = await authService.login(data)
-      setAuth(result.data)
-      navigate("/training-list")
-    } catch (e) {
-      setErrorMessages(state => ([...state, e.response.data.message]))
-      setTimeout(() => {
-        setErrorMessages(state => {
-          state.shift()
-          return [...state]
-        })
-      }, 2000)
+    const onLoginSubmit = async (data) => {
+        const res = await authService.login(data)
+        const result = await res.json()
+        if (result.code === 403) {
+            return handleErrorMessages(setErrorMessages, "Wrong Password or Username!")
+        } else {
+            setAuth(result)
+            navigate("/workout-list")
+        }
+    }
+    const onRegisterSubmit = async (data) => {
+        const { rePassword, ...registerData } = data
+        if (rePassword !== registerData.password) {
+            return handleErrorMessages(setErrorMessages, "Passwords are not matching!")
+
+        }
+        const res = await authService.register(data)
+        const result = await res.json()
+        if (result.code === 403) {
+            setErrorMessages(state => ([...state, result.message]))
+            setTimeout(() => {
+                setErrorMessages(state => {
+                    state.shift()
+                    return [...state]
+                })
+            }, 2000)
+        } else {
+            setAuth(result)
+            navigate("/workout-list")
+        }
     }
 
-  }
+    const onLogout = async () => {
+        await authService.logout()
+        setAuth({})
+    }
 
-  const contextAuth = {
-    onLoginSubmit,
-    userId: auth._id,
-    token: auth.accessToken,
-    userEmail: auth.email,
-    isAuthenticated: !!auth.accessToken
-  }
-  return (
-    <AuthContext.Provider value={contextAuth}>
-      <Navigation />
-      {errorMessages.map((e, i) =>
-      <div style={{display: "flex", flexDirection: "column", position: "fixed", top: '70px'}}>
-        <ErrorOverlay key={i} message={e} index={i}/>
-      </div>
-      )}
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/training-list' element={<TrainingList />}></Route>
-        <Route path='/auth/login' element={<Login />}></Route>
-        <Route path='/auth/register' element={<Register />}></Route>
-        <Route path='/create/program' element={<CreateProgram />}></Route>
-        <Route path='/training-list/program/:programId' element={<Workout />}></Route>
-        <Route path='/training-list/program/:programId/edit' element={<EditProgram />}></Route>
-      </Routes>
+    const contextAuth = {
+        onLoginSubmit,
+        onRegisterSubmit,
+        onLogout,
+        userId: auth._id,
+        token: auth.accessToken,
+        userEmail: auth.email,
+        isAuthenticated: !!auth.accessToken
+    }
+    const contextError = {
+        errorMessages,
+        setErrorMessages
+    }
+    return (
+        <ErrorContext.Provider value={contextError}>
+            <AuthContext.Provider value={contextAuth}>
+                <Navigation />
+                {errorMessages.map((e, i) =>
+                    <div style={{ display: "flex", flexDirection: "column", position: "fixed", top: '70px' }}>
+                        <ErrorOverlay key={i} message={e} index={i} />
+                    </div>
+                )}
+                <Routes>
+                    <Route path='/' element={<Home />}></Route>
+                    <Route path='/workout-list' element={<WorkoutList />}></Route>
+                    <Route path='/auth/login' element={<Login />}></Route>
+                    <Route path='/auth/logout' element={<Logout />}></Route>
+                    <Route path='/auth/register' element={<Register />}></Route>
+                    <Route path='/create/workout' element={<CreateWorkout />}></Route>
+                    <Route path='/workout-list/workout/:workoutId' element={<Workout />}></Route>
+                    <Route path='/workout-list/workout/:workoutId/edit' element={<EditWorkout />}></Route>
+                </Routes>
 
-    </AuthContext.Provider>
-  )
+            </AuthContext.Provider>
+        </ErrorContext.Provider>
+    )
 }
 
 export default App
