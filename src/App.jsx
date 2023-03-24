@@ -20,6 +20,7 @@ import { ErrorOverlay } from './components/ErrorOverlay/ErrorOverlay';
 import { Logout } from './components/Logout/Logout';
 import { ErrorContext } from './contexts/ErrorContext';
 import { handleErrorMessages } from './utils/errorUtils';
+import { Profile } from './components/Profile/Profile';
 function App() {
     const navigate = useNavigate()
     const [auth, setAuth] = useState({})
@@ -79,10 +80,11 @@ function App() {
                 )}
                 <Routes>
                     <Route path='/' element={<Home />}></Route>
-                    <Route path='/workout-list' element={<WorkoutList />}></Route>
+                    <Route path='/profile' element={<Profile />}></Route>
                     <Route path='/auth/login' element={<Login />}></Route>
                     <Route path='/auth/logout' element={<Logout />}></Route>
                     <Route path='/auth/register' element={<Register />}></Route>
+                    <Route path='/workout-list' element={<WorkoutList />}></Route>
                     <Route path='/create/workout' element={<CreateWorkout />}></Route>
                     <Route path='/workout-list/workout/:workoutId' element={<Workout />}></Route>
                     <Route path='/workout-list/workout/:workoutId/edit' element={<EditWorkout />}></Route>

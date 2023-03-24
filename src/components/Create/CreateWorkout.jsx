@@ -3,9 +3,12 @@ import { Button, Form, Row, Col, ListGroup, CloseButton } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
-import { validationRegexes } from '../../utils/errorUtils'
+import { handleErrorMessages, validationRegexes } from '../../utils/errorUtils'
+import styles from "./CreateWorkout.module.css"
+import { ErrorContext } from '../../contexts/ErrorContext'
 export const CreateWorkout = () => {
     const { token } = useContext(AuthContext)
+    const { setErrorMessages } = useContext(ErrorContext)
     const navigate = useNavigate()
     const [workout, setWorkout] = useState({
         workoutImage: "",
@@ -55,7 +58,7 @@ export const CreateWorkout = () => {
         setWorkout({ ...workout, workoutExercises: updatedExercises });
     };
     return (
-        <div style={{ margin: "30px", padding: "10px", border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "20px", backgroundColor: "f2f2f2" }}>
+        <div className={styles.wrapper}>
             <Form onSubmit={handleWorkoutSubmit}>
                 <Form.Group className="mb-3" controlId="formGridWorkoutImage">
                     <Form.Label>Workout Image</Form.Label>
@@ -153,15 +156,15 @@ export const CreateWorkout = () => {
                 </ListGroup>
                 <ListGroup>
                     {workout.workoutExercises.map((exercise, index) => (
-                        <ListGroup.Item style={{ margin: "0 0 20px 0" }} key={index}>
+                        <ListGroup.Item className={styles.workoutList} key={index}>
                             <Row>
                                 <Col>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Name:</Form.Label>
+                                        <Form.Label className={styles.formLabel}>Exercise Name:</Form.Label>
                                         {exercise.name}
                                     </div>
-                                    <div style={{ wordWrap: "break-word", width: "400px" }}>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Description:</Form.Label>
+                                    <div className={styles.descriptionExercise}>
+                                        <Form.Label className={styles.formLabel}>Exercise Description:</Form.Label>
                                         <p >
                                             {exercise.description}
                                         </p>
@@ -169,21 +172,21 @@ export const CreateWorkout = () => {
                                 </Col>
                                 <Col>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Sets:</Form.Label>
-                                        {exercise.sets}
+                                        <Form.Label className={styles.formLabel}>Exercise Reps:</Form.Label>
+                                        {exercise.reps}
                                     </div>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Reps:</Form.Label>
-                                        {exercise.reps}
+                                        <Form.Label className={styles.formLabel}>Exercise Sets:</Form.Label>
+                                        {exercise.sets}
                                     </div>
                                 </Col>
                                 <Col>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Video Link:</Form.Label>
+                                        <Form.Label className={styles.formLabel}>Exercise Video Link:</Form.Label>
                                         {exercise.videoLink}
                                     </div>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Video Image:</Form.Label>
+                                        <Form.Label className={styles.formLabel}>Exercise Video Image:</Form.Label>
                                         {exercise.videoImage}
                                     </div>
                                 </Col>

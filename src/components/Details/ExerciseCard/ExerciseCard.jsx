@@ -1,10 +1,11 @@
 import React from 'react'
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
+import styles from "./ExerciseCard.module.css"
+
 export const ExerciseCard = ({ handleClose, handleShow, show, name, description, videoLink, videoImage }) => {
     const embedId = videoLink.match(/(?<=v=)[^&\s]*/g)[0]
-    console.log(embedId)
     return (
-        <Card style={{ width: '18rem', paddingTop: "20px" }}>
+        <Card className={styles.card}>
             <Card.Img variant="top" src={videoImage} />
             <Card.Body>
                 <Card.Title>{name}</Card.Title>

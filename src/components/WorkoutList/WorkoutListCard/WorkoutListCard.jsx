@@ -4,9 +4,9 @@ import { LinkContainer } from 'react-router-bootstrap'
 export const WorkoutListCard = ({ workoutImage, workoutTitle, workoutDescription, _id }) => {
     return (
         <Col>
-            <Card>
+            <Card style={{width: "500px"}}>
                 <div style={{ display: "flex" }}>
-                    <Card.Img variant="top" style={{ width: "100%", height: "400px", objectFit: "cover" }} src={workoutImage} />
+                    <Card.Img variant="top" style={{height: "400px", objectFit: "cover", width: "100%" }} src={workoutImage} />
                 </div>
                 <Card.Body>
                     <Card.Title>{workoutTitle}</Card.Title>

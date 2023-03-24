@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Table, Spinner } from 'react-bootstrap';
 import { ExerciseCard } from './ExerciseCard/ExerciseCard';
 import { Navigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import styles from "./Workout.module.css"
 const Workout = () => {
     const { userId, token } = useContext(AuthContext)
     const [show, setShow] = useState(false);
@@ -42,14 +43,14 @@ const Workout = () => {
     return (
         <div>
             {spinner &&
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }}>
+                <div className={styles.spinner}>
                     <Spinner animation="border" />
                 </div>
             }
             {toNavigateDelete && <Navigate to="/workout-list" />}
             {toNavigateEdit && <Navigate to={`/workout-list/workout/${workoutId}/edit`} />}
 
-            <Container style={{ marginTop: "20px" }}>
+            <Container className={styles.container}>
                 <Row>
                     <Col style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                         <h1>{workout.workoutTitle}</h1>

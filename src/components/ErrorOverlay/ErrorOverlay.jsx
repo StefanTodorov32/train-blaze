@@ -1,9 +1,11 @@
 import React from 'react'
 import { Alert } from 'react-bootstrap'
+import styles from "./ErrorOverlay.module.css"
 export const ErrorOverlay = ({ message, index }) => {
+    console.log(styles)
     const marginCalc = index * 80;
     return (
-        <div style={{ width: "400px", marginLeft: "20px", marginTop: marginCalc + "px" }}>
+        <div className={styles.wrapper} style={{ marginTop: marginCalc + "px" }}>
             <Alert variant={"danger"}>
                 {message}
             </Alert>

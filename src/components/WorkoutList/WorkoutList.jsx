@@ -19,7 +19,8 @@ export const WorkoutList = () => {
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
                     <h1>No listed Workouts!</h1>
                     <h2>Create an <Link to="/auth/login" style={{ textDecoration: "none", color: "lightblue" }}>account</Link> to post!</h2>
-                </div> : <Row xs={1} md={2} className="g-4">
+                    <iframe src="https://giphy.com/embed/Up0tbonVHG7UNOQAmu" width="480" height="480" style={{borderRadius: "20px"}} ></iframe>
+                </div> : <Row xs={1} md={3} className="g-3">
                     {workouts.map(u => <WorkoutListCard key={u._id} {...u} />)}
                 </Row>}
 

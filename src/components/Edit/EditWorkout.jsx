@@ -1,11 +1,10 @@
-import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Row, Col, ListGroup, CloseButton } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 import { ErrorContext } from '../../contexts/ErrorContext'
 import { handleErrorMessages, validationRegexes } from '../../utils/errorUtils'
-
+import styles from "./EditWorkout.module.css"
 export const EditWorkout = () => {
     const { token } = useContext(AuthContext)
     const navigate = useNavigate()
@@ -73,7 +72,7 @@ export const EditWorkout = () => {
     };
 
     return (
-        <div style={{ margin: "30px", padding: "10px", border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "20px" }}>
+        <div className={styles.wrapper}>
             <Form onSubmit={handleWorkoutSubmit}>
                 <Form.Group className="mb-3" controlId="formGridWorkoutImage">
                     <Form.Label>Workout Image</Form.Label>
@@ -162,7 +161,7 @@ export const EditWorkout = () => {
                                 onChange={handleInputExerciseChange}
                             />
                         </Col>
-                        <div style={{ margin: "10px 0 10px 0" }}>
+                        <div className={styles.btnExercise}>
                             <Button variant="primary" onClick={handleAddExercise}>
                                 Add Exercise
                             </Button>
@@ -170,16 +169,16 @@ export const EditWorkout = () => {
                     </Row>
                 </ListGroup>
                 <ListGroup>
-                    {workout?.workoutExercises?.map((exercise, index) => (
-                        <ListGroup.Item style={{ margin: "0 0 20px 0" }} key={index}>
+                    {workout.workoutExercises.map((exercise, index) => (
+                        <ListGroup.Item className={styles.workoutListGroup} key={index}>
                             <Row>
                                 <Col>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Name:</Form.Label>
+                                        <Form.Label className={styles.fromLabel}>Exercise Name:</Form.Label>
                                         {exercise.name}
                                     </div>
                                     <div style={{ wordWrap: "break-word", width: "400px" }}>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Description:</Form.Label>
+                                        <Form.Label className={styles.fromLabel}>Exercise Description:</Form.Label>
                                         <p >
                                             {exercise.description}
                                         </p>
@@ -187,21 +186,21 @@ export const EditWorkout = () => {
                                 </Col>
                                 <Col>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Sets:</Form.Label>
+                                        <Form.Label className={styles.fromLabel}>Exercise Sets:</Form.Label>
                                         {exercise.sets}
                                     </div>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Reps:</Form.Label>
+                                        <Form.Label className={styles.fromLabel}>Exercise Reps:</Form.Label>
                                         {exercise.reps}
                                     </div>
                                 </Col>
                                 <Col>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Video Link:</Form.Label>
+                                        <Form.Label className={styles.fromLabel}>Exercise Video Link:</Form.Label>
                                         {exercise.videoLink}
                                     </div>
                                     <div>
-                                        <Form.Label style={{ marginRight: "5px", fontWeight: "600" }}>Exercise Video Image:</Form.Label>
+                                        <Form.Label className={styles.fromLabel}>Exercise Video Image:</Form.Label>
                                         {exercise.videoImage}
                                     </div>
                                 </Col>
@@ -212,11 +211,6 @@ export const EditWorkout = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
-
-
-
-
                 <Button variant="primary" type="submit">
                     Submit Workout
                 </Button>

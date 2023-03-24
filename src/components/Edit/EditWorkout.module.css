@@ -1,0 +1,16 @@
+.wrapper {
+    margin: 30px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px
+}
+.btnExercise{
+    margin: 10px 0 10px 0;
+}
+.workoutListGroup{
+    margin: 0 0 20px 0;
+}
+.fromLabel{
+    margin-right: 5px;
+     font-weight: 600;
+}
