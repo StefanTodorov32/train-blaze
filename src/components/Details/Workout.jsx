@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Container, Row, Col, Button, Table, Spinner } from 'react-bootstrap';
-import { ExerciseCard } from './ExerciseCard';
-import axios from 'axios';
+import { ExerciseCard } from './ExerciseCard/ExerciseCard';
 import { Navigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 const Workout = () => {
     const { userId, token } = useContext(AuthContext)
     const [show, setShow] = useState(false);

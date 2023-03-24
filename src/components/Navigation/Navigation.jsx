@@ -5,7 +5,7 @@ import {
     Navbar,
     Form,
 } from 'react-bootstrap';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useContext } from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
 const Navigation = () => {

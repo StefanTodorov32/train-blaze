@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { WorkoutListCard } from './WorkoutListCard'
+import { WorkoutListCard } from './WorkoutListCard/WorkoutListCard'
 
 export const WorkoutList = () => {
     const [workouts, setWorkouts] = useState([])

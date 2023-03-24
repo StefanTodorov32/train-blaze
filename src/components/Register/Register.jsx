@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
-import { useForm } from '../hooks/useForm';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useForm } from '../../hooks/useForm';
 export const Register = () => {
     const { onRegisterSubmit } = useContext(AuthContext)
     const { values, changeHandler, onSubmit } = useForm({

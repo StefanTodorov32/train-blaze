@@ -1,23 +1,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation/Navigation';
 import {
     Route,
     Routes,
     useNavigate
 } from "react-router-dom";
 import Home from './components/Home/Home';
-import { WorkoutList } from './components/WorkoutList';
-import Workout from './components/Workout';
+import { WorkoutList } from './components/WorkoutList/WorkoutList';
+import Workout from './components/Details/Workout';
 import { CreateWorkout } from './components/Create/CreateWorkout';
 import { EditWorkout } from './components/Edit/EditWorkout';
 import "./App.css"
 import { Login } from './components/Login/Login';
-import { Register } from './components/Register';
+import { Register } from './components/Register/Register';
 import { AuthContext } from './contexts/AuthContext';
 import { useState } from 'react';
 import * as authService from "./services/authServices"
-import { ErrorOverlay } from './components/ErrorOverlay';
-import { Logout } from './components/Logout';
+import { ErrorOverlay } from './components/ErrorOverlay/ErrorOverlay';
+import { Logout } from './components/Logout/Logout';
 import { ErrorContext } from './contexts/ErrorContext';
 import { handleErrorMessages } from './utils/errorUtils';
 function App() {
@@ -39,18 +39,11 @@ function App() {
         const { rePassword, ...registerData } = data
         if (rePassword !== registerData.password) {
             return handleErrorMessages(setErrorMessages, "Passwords are not matching!")
-
         }
         const res = await authService.register(data)
         const result = await res.json()
         if (result.code === 403) {
-            setErrorMessages(state => ([...state, result.message]))
-            setTimeout(() => {
-                setErrorMessages(state => {
-                    state.shift()
-                    return [...state]
-                })
-            }, 2000)
+            return handleErrorMessages(setErrorMessages, result.message)
         } else {
             setAuth(result)
             navigate("/workout-list")
