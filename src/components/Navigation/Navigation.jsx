@@ -13,7 +13,9 @@ const Navigation = () => {
     return (
         <Navbar style={{ background: "linear-gradient(90deg, rgba(8,0,136,1) 0%, rgba(73,73,255,1) 38%, rgba(0,181,218,1) 100%)" }} expand="lg" variant='dark'>
             <Container >
-                <Navbar.Brand href="/" >TrainBlaze</Navbar.Brand>
+                <LinkContainer to="/">
+                    <Navbar.Brand>TrainBlaze</Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" >
