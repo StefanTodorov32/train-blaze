@@ -46,17 +46,6 @@ const Navigation = () => {
                         </>}
                     </Nav>
                 </Navbar.Collapse>
-                <Form className="d-flex">
-                    <Form.Control
-                        type="search"
-                        placeholder="Search"
-                        className="me-2"
-                        aria-label="Search"
-                    />
-                    <Button variant="dark">
-                        Search
-                    </Button>
-                </Form>
             </Container>
         </Navbar>
     )

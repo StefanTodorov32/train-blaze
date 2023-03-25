@@ -39,7 +39,6 @@ const Workout = () => {
         })
             .then(setToNavigateDelete(true))
     }
-    console.log(workout)
     return (
         <div>
             {spinner &&

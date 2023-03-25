@@ -6,12 +6,19 @@ import { ErrorContext } from '../../contexts/ErrorContext'
 import { handleErrorMessages, validationRegexes } from '../../utils/errorUtils'
 import styles from "./EditWorkout.module.css"
 export const EditWorkout = () => {
+    //Context variables
     const { token } = useContext(AuthContext)
     const navigate = useNavigate()
     const { setErrorMessages } = useContext(ErrorContext)
+
+    //Url parameters
     const { workoutId } = useParams()
+    
+    //State variables
     const [workout, setWorkout] = useState(null)
     const [newExercise, setNewExercise] = useState({ name: '', sets: '', reps: '', description: '', videoLink: "", videoImage: "" });
+
+    //Fetch Component on Mount
     useEffect(() => {
         if (!token) {
             navigate(`/workout-list/workout/${workoutId}`)
@@ -25,6 +32,8 @@ export const EditWorkout = () => {
             .then(res => res.json())
             .then(data => setWorkout(data))
     }, [])
+
+    //Workout handlers
     const handleInputWorkoutChange = (event) => {
         const { name, value } = event.target
         setWorkout({ ...workout, [name]: value })
@@ -41,10 +50,9 @@ export const EditWorkout = () => {
         })
             .then(navigate(`/workout-list/workout/${workoutId}`))
         const data = await res.json()
-        console.log(data)
     }
 
-
+    //Exercise handlers
     const handleAddExercise = () => {
         const newExercises = [...workout.workoutExercises, newExercise];
         if (newExercise.name.trim() == "" || newExercise.sets.trim() == "" || newExercise.reps.trim() == "" || newExercise.description.trim() == "" || newExercise.videoLink.trim() == "") {
@@ -169,7 +177,7 @@ export const EditWorkout = () => {
                     </Row>
                 </ListGroup>
                 <ListGroup>
-                    {workout.workoutExercises.map((exercise, index) => (
+                    {workout?.workoutExercises.map((exercise, index) => (
                         <ListGroup.Item className={styles.workoutListGroup} key={index}>
                             <Row>
                                 <Col>
