@@ -18,6 +18,8 @@ import { ErrorContext, ErrorProvider } from './contexts/ErrorContext';
 import { Profile } from './components/Profile/Profile';
 import { AuthProvider } from './contexts/AuthContext';
 import { useContext } from 'react';
+import { AuthUserGuard } from './guards/AuthUserGuard';
+import { NonAuthGuard } from './guards/NonAuthGuard';
 function App() {
     const { errorMessages } = useContext(ErrorContext)
 
@@ -32,14 +34,18 @@ function App() {
             )}
             <Routes>
                 <Route path='/' element={<Home />}></Route>
-                <Route path='/profile' element={<Profile />}></Route>
-                <Route path='/auth/login' element={<Login />}></Route>
-                <Route path='/auth/logout' element={<Logout />}></Route>
-                <Route path='/auth/register' element={<Register />}></Route>
+                <Route element={<NonAuthGuard />}>
+                    <Route path='/auth/login' element={<Login />}></Route>
+                    <Route path='/auth/register' element={<Register />}></Route>
+                </Route>
                 <Route path='/workout-list' element={<WorkoutList />}></Route>
-                <Route path='/create/workout' element={<CreateWorkout />}></Route>
-                <Route path='/workout-list/workout/:workoutId' element={<Workout />}></Route>
-                <Route path='/workout-list/workout/:workoutId/edit' element={<EditWorkout />}></Route>
+                <Route element={<AuthUserGuard />}>
+                    <Route path='/profile' element={<Profile />}></Route>
+                    <Route path='/create/workout' element={<CreateWorkout />}></Route>
+                    <Route path='/workout-list/workout/:workoutId' element={<Workout />}></Route>
+                    <Route path='/workout-list/workout/:workoutId/edit' element={<EditWorkout />}></Route>
+                    <Route path='/auth/logout' element={<Logout />}></Route>
+                </Route>
             </Routes>
         </AuthProvider>
     )
