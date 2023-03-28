@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { handleErrorMessages } from "../utils/errorUtils";
 import * as authService from "../services/authServices"
 import { ErrorContext } from "./ErrorContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({
     children
 }) => {
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = useLocalStorage("auth", {})
     const navigate = useNavigate()
     const { setErrorMessages} = useContext(ErrorContext)
 
