@@ -4,6 +4,7 @@ import { ExerciseCard } from './ExerciseCard/ExerciseCard';
 import { Navigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from "./Workout.module.css"
+import { deleteWorkoutById, getWorkoutById } from '../../services/workoutService';
 const Workout = () => {
     const { userId, token } = useContext(AuthContext)
     const [show, setShow] = useState(false);
@@ -15,13 +16,7 @@ const Workout = () => {
     const [toNavigateDelete, setToNavigateDelete] = useState(false)
     const [toNavigateEdit, setToNavigateEdit] = useState(false)
     useEffect(() => {
-        fetch(`http://localhost:3030/data/workout/${workoutId}`, {
-            method: "GET",
-            header: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(res => res.json())
+        getWorkoutById(workoutId)
             .then(data => {
                 setSpinner(false)
                 setWorkout(data)
@@ -30,13 +25,7 @@ const Workout = () => {
     }, [])
 
     const handleDeleteWorkout = () => {
-        fetch(`http://localhost:3030/data/workout/${workoutId}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Authorization": token
-            }
-        })
+        deleteWorkoutById(workoutId, token)
             .then(setToNavigateDelete(true))
     }
     return (
@@ -62,7 +51,7 @@ const Workout = () => {
 
                 </Row>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>
-                    {workout.workoutExercises?.map(w => <ExerciseCard key={w._id} {...w} handleClose={handleClose} handleShow={handleShow} show={show} />)}
+                    {workout.workoutExercises?.map((w, i) => <ExerciseCard key={i} {...w} handleClose={handleClose} handleShow={handleShow} show={show} />)}
                 </Row>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <Table striped bordered hover style={{ margin: "16px" }}>

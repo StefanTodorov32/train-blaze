@@ -3,6 +3,7 @@ import { Button, Form, Row, Col, ListGroup, CloseButton } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 import { ErrorContext } from '../../contexts/ErrorContext'
+import { editWorkoutById, getWorkoutById } from '../../services/workoutService'
 import { handleErrorMessages, validationRegexes } from '../../utils/errorUtils'
 import styles from "./EditWorkout.module.css"
 export const EditWorkout = () => {
@@ -13,23 +14,14 @@ export const EditWorkout = () => {
 
     //Url parameters
     const { workoutId } = useParams()
-    
+
     //State variables
     const [workout, setWorkout] = useState(null)
     const [newExercise, setNewExercise] = useState({ name: '', sets: '', reps: '', description: '', videoLink: "", videoImage: "" });
 
     //Fetch Component on Mount
     useEffect(() => {
-        if (!token) {
-            navigate(`/workout-list/workout/${workoutId}`)
-        }
-        fetch(`http://localhost:3030/data/workout/${workoutId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(res => res.json())
+        getWorkoutById(workoutId)
             .then(data => setWorkout(data))
     }, [])
 
@@ -40,16 +32,8 @@ export const EditWorkout = () => {
     }
     const handleWorkoutSubmit = async (event) => {
         event.preventDefault()
-        const res = await fetch("http://localhost:3030/data/workout/" + workoutId, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Authorization": token
-            },
-            body: JSON.stringify(workout)
-        })
-            .then(navigate(`/workout-list/workout/${workoutId}`))
-        const data = await res.json()
+        await editWorkoutById(workoutId, workout, token)
+        navigate(`/workout-list/workout/${workoutId}`)
     }
 
     //Exercise handlers

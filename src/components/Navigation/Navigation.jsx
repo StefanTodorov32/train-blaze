@@ -9,7 +9,8 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useContext } from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
 const Navigation = () => {
-    const { isAuthenticated } = useContext(AuthContext)
+    const { isAuthenticated, userEmail } = useContext(AuthContext)
+
     return (
         <Navbar style={{ background: "linear-gradient(90deg, rgba(8,0,136,1) 0%, rgba(73,73,255,1) 38%, rgba(0,181,218,1) 100%)" }} expand="lg" variant='dark'>
             <Container >
@@ -35,7 +36,7 @@ const Navigation = () => {
                                 <Nav.Link >Logout</Nav.Link>
                             </LinkContainer>
                             <LinkContainer to="/profile">
-                                <Nav.Link >Profile</Nav.Link>
+                                <Nav.Link >Profile: {userEmail}</Nav.Link>
                             </LinkContainer>
                         </>}
                         {!isAuthenticated && <>

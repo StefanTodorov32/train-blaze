@@ -6,6 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { handleErrorMessages, validationRegexes } from '../../utils/errorUtils'
 import styles from "./CreateWorkout.module.css"
 import { ErrorContext } from '../../contexts/ErrorContext'
+import { postWorkout } from '../../services/workoutService'
 export const CreateWorkout = () => {
     const { token } = useContext(AuthContext)
     const { setErrorMessages } = useContext(ErrorContext)
@@ -22,14 +23,7 @@ export const CreateWorkout = () => {
     }
     const handleWorkoutSubmit = async (event) => {
         event.preventDefault()
-        await fetch("http://localhost:3030/data/workout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Authorization": token
-            },
-            body: JSON.stringify(workout)
-        })
+        await postWorkout(workout, token)
         navigate("/workout-list")
     }
 
