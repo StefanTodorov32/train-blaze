@@ -1,22 +1,16 @@
+import { requester } from "./requester"
+
 const basedUrl = "http://localhost:3030/users"
 
-export const login = (data) => fetch(`${basedUrl}/login`, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-})
-export const register = (data) => fetch(`${basedUrl}/register`, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-})
-export const logout = () => fetch(`${basedUrl}/logout`, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
+export async function login(body) {
+    const data = await requester(`${basedUrl}/login`, "POST", body)
+    return data
+}
+export async function register(body) {
+    const data = await requester(`${basedUrl}/register`, "POST", body)
+    return data
+}
+export async function logout(){
+    const data = await requester(`${basedUrl}/logout`, "GET")
+    return data
+}

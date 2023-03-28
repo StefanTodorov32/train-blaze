@@ -7,7 +7,7 @@ export const Logout = () => {
     const { onLogout } = useContext(AuthContext)
     useEffect(() => {
         onLogout()
-    }, [])
+    }, [onLogout])
     return (
         <Navigate to="/" />
     )

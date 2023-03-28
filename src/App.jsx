@@ -3,7 +3,6 @@ import Navigation from './components/Navigation/Navigation';
 import {
     Route,
     Routes,
-    useNavigate
 } from "react-router-dom";
 import Home from './components/Home/Home';
 import { WorkoutList } from './components/WorkoutList/WorkoutList';

@@ -1,10 +1,10 @@
 import { useState } from "react"
 
 export const useLocalStorage = (key, inititalValue) => {
-    const [state, setState] = useState(()=>{
+    const [state, setState] = useState(() => {
         const stringifiedState = localStorage.getItem(key)
         if (stringifiedState) {
-            const objectState = JSON.stringify(stringifiedState)
+            const objectState = JSON.parse(stringifiedState)
             return objectState
         }
         return inititalValue

@@ -12,11 +12,10 @@ export const AuthProvider = ({
 }) => {
     const [auth, setAuth] = useLocalStorage("auth", {})
     const navigate = useNavigate()
-    const { setErrorMessages} = useContext(ErrorContext)
+    const { setErrorMessages } = useContext(ErrorContext)
 
     const onLoginSubmit = async (data) => {
-        const res = await authService.login(data)
-        const result = await res.json()
+        const result = await authService.login(data)
         if (result.code === 403) {
             return handleErrorMessages(setErrorMessages, "Wrong Password or Username!")
         } else {
@@ -41,7 +40,7 @@ export const AuthProvider = ({
     }
 
     const onLogout = async () => {
-        await authService.logout()
+        await authService.logout(auth.accessToken)
         setAuth({})
     }
 
@@ -54,7 +53,6 @@ export const AuthProvider = ({
         userEmail: auth.email,
         isAuthenticated: !!auth.accessToken
     }
-
     return <>
         <AuthContext.Provider value={contextAuth}>
             {children}
