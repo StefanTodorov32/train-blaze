@@ -21,7 +21,6 @@ const Workout = () => {
                 setSpinner(false)
                 setWorkout(data)
             })
-            .catch(error => console.log(error));
     }, [])
 
     const handleDeleteWorkout = () => {

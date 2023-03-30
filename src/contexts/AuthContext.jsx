@@ -4,6 +4,7 @@ import { handleErrorMessages } from "../utils/errorUtils";
 import * as authService from "../services/authServices"
 import { ErrorContext } from "./ErrorContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { validationRegexes } from "../utils/errorUtils"
 
 export const AuthContext = createContext();
 
@@ -20,7 +21,7 @@ export const AuthProvider = ({
             return handleErrorMessages(setErrorMessages, "Wrong Password or Username!")
         } else {
             setAuth(result)
-            navigate("/workout-list")
+            navigate("/")
         }
     }
 
@@ -29,13 +30,15 @@ export const AuthProvider = ({
         if (rePassword !== registerData.password) {
             return handleErrorMessages(setErrorMessages, "Passwords are not matching!")
         }
+        if (!validationRegexes.imageUrl.test(registerData.imageUrl)) {
+            return handleErrorMessages(setErrorMessages, "Invalid Image Url!")
+        }
         const res = await authService.register(data)
-        const result = await res.json()
-        if (result.code === 403) {
-            return handleErrorMessages(setErrorMessages, result.message)
+        if (res.code) {
+            return handleErrorMessages(setErrorMessages, res.message)
         } else {
-            setAuth(result)
-            navigate("/workout-list")
+            setAuth(res)
+            navigate("/")
         }
     }
 
@@ -51,7 +54,8 @@ export const AuthProvider = ({
         userId: auth._id,
         token: auth.accessToken,
         userEmail: auth.email,
-        isAuthenticated: !!auth.accessToken
+        isAuthenticated: !!auth.accessToken,
+        imageUrl: auth.imageUrl
     }
     return <>
         <AuthContext.Provider value={contextAuth}>

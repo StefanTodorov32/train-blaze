@@ -1,4 +1,4 @@
-export async function requester(url, method, data, token) {
+export async function requester(url, method, data) {
     const options = {
         method: method,
         headers: {
@@ -21,7 +21,7 @@ export async function requester(url, method, data, token) {
     }
     const res = await fetch(url, options)
     if (!res.ok) {
-        throw new Error("Request failed!")
+        return res.json()
     }
     if (res.status === 204) {
         return {}

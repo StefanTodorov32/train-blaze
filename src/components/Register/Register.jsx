@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -8,6 +8,7 @@ export const Register = () => {
     const { onRegisterSubmit } = useContext(AuthContext)
     const { values, changeHandler, onSubmit } = useForm({
         email: "",
+        imageUrl: "",
         password: "",
         rePassword: ""
     }, onRegisterSubmit)
@@ -22,7 +23,10 @@ export const Register = () => {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" name="email" onChange={changeHandler} value={values.email} />
                 </Form.Group>
-
+                <Form.Group controlId="formBasicImageUrl">
+                    <Form.Label>Profile Image</Form.Label>
+                    <Form.Control type="imageUrl" placeholder="Enter image" name="imageUrl" onChange={changeHandler} value={values.imageUrl} />
+                </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label style={{ marginTop: "10px" }}>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" name="password" onChange={changeHandler} value={values.password} />
