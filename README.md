@@ -16,7 +16,7 @@ Added also protected guards that permits logged users to create/edit/delete work
 ## How to use
 
 ```sh
-Download: https://github.com/StefanTodorov32/server
+Open the server directory and run the server with node server.js
 ```
 
 ```sh
