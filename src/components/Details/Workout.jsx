@@ -5,6 +5,9 @@ import { Navigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from "./Workout.module.css"
 import { deleteWorkoutById, getWorkoutById } from '../../services/workoutService';
+import RatingList from './RatingList/RatingList';
+import { getAllRates } from '../../services/rateService';
+import RatingBadge from './RatingBadge/RatingBadge';
 const Workout = () => {
     const { userId, token } = useContext(AuthContext)
     const [show, setShow] = useState(false);
@@ -15,6 +18,7 @@ const Workout = () => {
     const [workout, setWorkout] = useState({})
     const [toNavigateDelete, setToNavigateDelete] = useState(false)
     const [toNavigateEdit, setToNavigateEdit] = useState(false)
+    const [ratingsArray, setRatingArrays] = useState([])
     useEffect(() => {
         getWorkoutById(workoutId)
             .then(data => {
@@ -43,11 +47,14 @@ const Workout = () => {
                         <h1>{workout.workoutTitle}</h1>
                         <p>{workout.workoutDescription}</p>
                     </Col>
-                    {userId == workout._ownerId ? <div style={{ marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Button variant="primary" style={{ marginRight: "10px" }} onClick={handleDeleteWorkout}>Delete</Button>
-                        <Button variant="primary" onClick={() => setToNavigateEdit(true)}>Edit</Button>
-                    </div> : null}
+                    <div style={{ marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {userId == workout._ownerId ? <>
+                            <Button variant="primary" style={{ marginRight: "10px" }} onClick={handleDeleteWorkout}>Delete</Button>
+                            <Button variant="primary" style={{ marginRight: "10px" }} onClick={() => setToNavigateEdit(true)}>Edit</Button>
+                        </> : <RatingList id={workoutId} setRatingArrays={setRatingArrays} />}
 
+                        <RatingBadge workoutId={workoutId} setRatingArrays={setRatingArrays} ratingsArray={ratingsArray} workout={workout} />
+                    </div>
                 </Row>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>
                     {workout.workoutExercises?.map((w, i) => <ExerciseCard key={i} {...w} handleClose={handleClose} handleShow={handleShow} show={show} />)}
