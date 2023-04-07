@@ -55,6 +55,7 @@ const Workout = () => {
                             <Button variant="primary" style={{ marginRight: "10px" }} onClick={handleDeleteWorkout}>Delete</Button>
                             <Button variant="primary" style={{ marginRight: "10px" }} onClick={() => setToNavigateEdit(true)}>Edit</Button>
                         </> : ""}
+                        
                         {canRate && <RatingList setRenderBadge={setRenderBadge} id={workoutId} setRatingArrays={setRatingArrays} />}
                         <RatingBadge setCanRate={setCanRate} userId={userId} renderBadge={renderBadge} setRenderBadge={setRenderBadge} workoutId={workoutId} setRatingArrays={setRatingArrays} ratingsArray={ratingsArray} workout={workout} />
                     </div>

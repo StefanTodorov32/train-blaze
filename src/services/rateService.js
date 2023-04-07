@@ -9,7 +9,6 @@ export async function getAllRates(id) {
     const relationQuery = encodeURIComponent(`author=_ownerId:users`);
 
     const result = await requester(`http://localhost:3030/data/rate?where=${searchQuery}&load=${relationQuery}`, "GET");
-
-
+    if(result.code === 404) return []
     return result
 }
