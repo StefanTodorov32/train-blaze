@@ -1,10 +1,14 @@
 # train-blaze
-SPA project for SoftUni React course.
+SPA project for SoftUni React course. 
+Acceess the app on **https://train-blaze.web.app**
 
 ## Description
 This is a Spa project that allows users to register/login, create workouts, edit/delete them and see their profile.
 
 Added also protected guards that permits logged users to create/edit/delete workouts. Guests can only view all the workouts and view login/register pages. Secondary information is stored in LocalStorage and used in user's profile page.
+
+The app is deployed on firebase, **the server is not!**
+
 
 ## Technologies
 
