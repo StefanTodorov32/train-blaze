@@ -20,7 +20,15 @@ The app is deployed on firebase, **the server is not!**
 ## How to use
 
 ```sh
-Open the server directory and run the server with node server.js
+Clone this repo: https://github.com/StefanTodorov32/server
+```
+
+```sh
+Run node server.js
+```
+
+```sh
+Clone the react app
 ```
 
 ```sh
