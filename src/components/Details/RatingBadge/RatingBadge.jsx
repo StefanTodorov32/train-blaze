@@ -4,6 +4,7 @@ import { getAllRates } from "../../../services/rateService";
 
 const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, renderBadge, setCanRate, userId }) => {
     const [avgRating, setAvgRating] = useState(0)
+    console.log(avgRating)
     useEffect(() => {
         getAllRates(workoutId)
             .then(r => {
@@ -17,9 +18,11 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
                 ratingsArray.map(r => {
                     ratingCount += r.rate
                 })
+                console.log(ratingCount)
+                console.log(ratingsArray.length)
                 setAvgRating(ratingCount / ratingsArray.length)
             })
-    }, [workout, renderBadge])
+    }, [workout, renderBadge, workoutId, userId])
 
     const variant = avgRating >= 4 ? "success" : "warning";
     return <Badge style={{ marginLeft: "10px" }} bg={variant}>Rating: {avgRating.toFixed(2)}</Badge>;

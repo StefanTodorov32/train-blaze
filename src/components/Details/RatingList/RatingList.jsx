@@ -10,12 +10,9 @@ const RatingList = ({ id, setRatingArrays, setRenderBadge }) => {
 
   const handleRate = async () => {
     const data = await rateWorkout(id, rating)
-    // setRatingArrays(state => [...state, data])
-    console.log(data)
     setRatingArrays(state => [...state, data])
     setRenderBadge(true)
   };
-  // const canRate = ratingsArray[0].
   return (
     <div>
       <ButtonGroup aria-label="Rating">

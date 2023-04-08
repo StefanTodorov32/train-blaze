@@ -32,7 +32,7 @@ export const Login = () => {
                     <p>Don't have an account? <Link to="/auth/register" style={{ textDecoration: "none", color: "blue" }}>Register</Link></p>
                 </div>
                 <Button variant="primary" type="submit" className={styles.btn}>
-                    Login
+                    Register
                 </Button>
             </Form>
         </div >
