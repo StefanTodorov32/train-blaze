@@ -9,10 +9,7 @@ import RatingList from './RatingList/RatingList';
 import RatingBadge from './RatingBadge/RatingBadge';
 const Workout = () => {
     const { userId, token } = useContext(AuthContext)
-    const [show, setShow] = useState(false);
     const [spinner, setSpinner] = useState(true)
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     const { workoutId } = useParams()
     const [workout, setWorkout] = useState({})
     const [toNavigateDelete, setToNavigateDelete] = useState(false)
@@ -55,13 +52,13 @@ const Workout = () => {
                             <Button variant="primary" style={{ marginRight: "10px" }} onClick={handleDeleteWorkout}>Delete</Button>
                             <Button variant="primary" style={{ marginRight: "10px" }} onClick={() => setToNavigateEdit(true)}>Edit</Button>
                         </> : ""}
-                        
+
                         {canRate && <RatingList setRenderBadge={setRenderBadge} id={workoutId} setRatingArrays={setRatingArrays} />}
                         <RatingBadge setCanRate={setCanRate} userId={userId} renderBadge={renderBadge} setRenderBadge={setRenderBadge} workoutId={workoutId} setRatingArrays={setRatingArrays} ratingsArray={ratingsArray} workout={workout} />
                     </div>
                 </Row>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>
-                    {workout.workoutExercises?.map((w, i) => <ExerciseCard key={i} {...w} handleClose={handleClose} handleShow={handleShow} show={show} />)}
+                    {workout.workoutExercises?.map((w, i) => <ExerciseCard key={i} {...w} />)}
                 </Row>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <Table striped bordered hover style={{ margin: "16px" }}>
