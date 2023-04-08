@@ -19,7 +19,7 @@ export const ExerciseCard = ({ name, description, videoLink, videoImage }) => {
                 <Button variant="primary" onClick={handleShow}>
                     How to do?
                 </Button>
-                <VideoModal handleShow={handleShow} name={name} embedId={embedId} handleClose={handleClose} show={show}></VideoModal>
+                <VideoModal handleShow={handleShow} name={name} embedId={embedId} handleClose={handleClose} show={show} />
             </Card.Body>
         </Card>
     )
