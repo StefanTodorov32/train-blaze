@@ -32,8 +32,7 @@ export const VideoModal = ({
                                     height: "600px ",
                                     objectFit: "cover",
                                 }}
-                                src={`https://www.youtube.com/embed/${embedId}?v=${Math.random()}`}
-                                frameBorder="0"
+                                src={`https://www.youtube.com/embed/${embedId}`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="Embedded youtube"
