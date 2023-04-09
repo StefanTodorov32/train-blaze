@@ -9,6 +9,7 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
         getAllRates(workoutId)
             .then(r => {
                 console.log("🚀 ~ file: RatingBadge.jsx:27 ~ useEffect ~ workoutId:", workoutId)
+                console.log("🚀 ~ file: RatingBadge.jsx:15 ~ a ~ ratingsArray:", ratingsArray)
                 const a = ratingsArray.find(x => {
                     return x._ownerId == userId
                 })
