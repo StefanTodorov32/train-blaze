@@ -11,7 +11,7 @@ export const VideoModal = ({
     return (
         <Modal
             size="lg"
-            show= {show}
+            show={show}
             onHide={() => handleShow(false)}
             aria-labelledby="example-modal-sizes-title-lg"
             key={embedId}

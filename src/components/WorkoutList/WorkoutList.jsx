@@ -12,7 +12,7 @@ export const WorkoutList = () => {
     return (
 
         <div style={{ padding: "72px", display: "flex", justifyContent: "center" }}>
-            {workouts.map(u => <Row xs={1} md={3} className="g-3" style={{ width: "100%" }}>
+            {workouts.map(u => <Row xs={1} md={3} className="g-3" style={{ width: "100%" }} key={u._id}>
                 <WorkoutListCard key={u._id} {...u} />
             </Row>)}
             {workouts.length === 0 && <div>No Listings!</div>}
