@@ -11,7 +11,8 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
                 if (a) setCanRate(false); else setCanRate(true)
                 if (workout._ownerId == userId) setCanRate(false)
                 if (r.length === 0) return setAvgRating(0)
-                if (isNaN(avgRating)) setAvgRating(0) 
+                if (isNaN(avgRating)) setAvgRating(0)
+                
                 setRatingArrays(r)
                 let ratingCount = 0
                 ratingsArray.map(r => {
