@@ -9,12 +9,16 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
         getAllRates(workoutId)
             .then(r => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 console.log("🚀 ~ file: RatingBadge.jsx:27 ~ useEffect ~ workoutId:", workoutId)
                 const a = ratingsArray.find(x => {
                     return x._ownerId == userId
                 })
                 console.log("🚀 ~ file: RatingBadge.jsx:13 ~ useEffect ~ a:", a)
+=======
+                const a = ratingsArray.find(x => x._ownerId == userId)
+>>>>>>> parent of 2e62744 (updated)
                 if (a) setCanRate(false); else setCanRate(true)
                 if (workout._ownerId == userId) setCanRate(false)
                 if (r.length === 0) return setAvgRating(0)
@@ -25,6 +29,8 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
                 ratingsArray.map(r => {
                     ratingCount += r.rate
                 })
+                console.log(ratingCount)
+                console.log(ratingsArray.length)
                 setAvgRating(ratingCount / ratingsArray.length)
             })
     }, [workout, renderBadge, workoutId, userId])
