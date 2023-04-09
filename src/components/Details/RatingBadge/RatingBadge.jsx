@@ -7,20 +7,23 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
     useEffect(() => {
         getAllRates(workoutId)
             .then(r => {
+                console.log("🚀 ~ file: RatingBadge.jsx:27 ~ useEffect ~ workoutId:", workoutId)
+                console.log("🚀 ~ file: RatingBadge.jsx:13 ~ useEffect ~ a:", a)
                 const a = ratingsArray.find(x => x._ownerId == userId)
                 if (a) setCanRate(false); else setCanRate(true)
                 if (workout._ownerId == userId) setCanRate(false)
                 if (r.length === 0) return setAvgRating(0)
                 if (isNaN(avgRating)) setAvgRating(0)
-                
                 setRatingArrays(r)
                 let ratingCount = 0
                 ratingsArray.map(r => {
                     ratingCount += r.rate
                 })
+                console.log(ratingCount)
+                console.log(ratingsArray.length)
                 setAvgRating(ratingCount / ratingsArray.length)
             })
-    }, [workout, renderBadge])
+    }, [workout, renderBadge, workoutId, userId])
 
     const variant = avgRating >= 4 ? "success" : "warning";
     return <Badge style={{ marginLeft: "10px" }} bg={variant}>Rating: {avgRating.toFixed(2)}</Badge>;

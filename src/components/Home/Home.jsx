@@ -6,9 +6,10 @@ const Home = () => {
   return (
     <div className={styles.wrapper}>
       <h1>TrainBlaze</h1>
-      <Link to="/workout-list"><Button variant="primary" size="lg">
-        Explore
-      </Button></Link>
+      <Link to="/workout-list">
+        <Button variant="primary" size="lg">
+          Explore
+        </Button></Link>
     </div>
   )
 }
