@@ -4,28 +4,18 @@ import { getAllRates } from "../../../services/rateService";
 
 const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, renderBadge, setCanRate, userId }) => {
     const [avgRating, setAvgRating] = useState(0)
-    let ratingCount = 0
     useEffect(() => {
         getAllRates(workoutId)
             .then(r => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
                 console.log("🚀 ~ file: RatingBadge.jsx:27 ~ useEffect ~ workoutId:", workoutId)
-                const a = ratingsArray.find(x => {
-                    return x._ownerId == userId
-                })
                 console.log("🚀 ~ file: RatingBadge.jsx:13 ~ useEffect ~ a:", a)
-=======
                 const a = ratingsArray.find(x => x._ownerId == userId)
->>>>>>> parent of 2e62744 (updated)
                 if (a) setCanRate(false); else setCanRate(true)
                 if (workout._ownerId == userId) setCanRate(false)
                 if (r.length === 0) return setAvgRating(0)
-                if (isNaN(avgRating)) setAvgRating(0) 
+                if (isNaN(avgRating)) setAvgRating(0)
                 setRatingArrays(r)
                 let ratingCount = 0
->>>>>>> parent of b8e7674 (updated)
                 ratingsArray.map(r => {
                     ratingCount += r.rate
                 })
