@@ -23,9 +23,6 @@ const Workout = () => {
                 setSpinner(false)
                 setWorkout(data)
             })
-        const a = ratingsArray.find(x => x._ownerId == userId)
-        if (a) setCanRate(false); else setCanRate(true)
-        if (workout._ownerId == userId) setCanRate(false)
     }, [])
 
     const handleDeleteWorkout = () => {

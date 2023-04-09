@@ -7,8 +7,6 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
     useEffect(() => {
         getAllRates(workoutId)
             .then(r => {
-                console.log("🚀 ~ file: RatingBadge.jsx:27 ~ useEffect ~ workoutId:", workoutId)
-                console.log("🚀 ~ file: RatingBadge.jsx:13 ~ useEffect ~ a:", a)
                 const a = ratingsArray.find(x => x._ownerId == userId)
                 if (a) setCanRate(false); else setCanRate(true)
                 if (workout._ownerId == userId) setCanRate(false)
