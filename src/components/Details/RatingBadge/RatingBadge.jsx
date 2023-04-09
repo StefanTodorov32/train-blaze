@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
 import { getAllRates } from "../../../services/rateService";
 
-const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, renderBadge, setCanRate, userId }) => {
+const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, renderBadge, setCanRate, userId, allRates }) => {
     const [avgRating, setAvgRating] = useState(0)
     useEffect(() => {
         getAllRates(workoutId)
@@ -21,7 +21,7 @@ const RatingBadge = ({ workoutId, setRatingArrays, ratingsArray, workout, render
                 console.log(ratingsArray.length)
                 setAvgRating(ratingCount / ratingsArray.length)
             })
-    }, [workout, renderBadge, workoutId, userId])
+    }, [workout, renderBadge, workoutId, userId, allRates])
 
     const variant = avgRating >= 4 ? "success" : "warning";
     return <Badge style={{ marginLeft: "10px" }} bg={variant}>Rating: {avgRating.toFixed(2)}</Badge>;

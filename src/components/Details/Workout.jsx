@@ -7,6 +7,7 @@ import styles from "./Workout.module.css"
 import { deleteWorkoutById, getWorkoutById } from '../../services/workoutService';
 import RatingList from './RatingList/RatingList';
 import RatingBadge from './RatingBadge/RatingBadge';
+import { getAllRates } from '../../services/rateService';
 const Workout = () => {
     const { userId, token } = useContext(AuthContext)
     const [spinner, setSpinner] = useState(true)
@@ -17,12 +18,15 @@ const Workout = () => {
     const [ratingsArray, setRatingArrays] = useState([])
     const [renderBadge, setRenderBadge] = useState(null)
     const [canRate, setCanRate] = useState(false)
+    const [allRates, setAllRates] = useState([])
     useEffect(() => {
         getWorkoutById(workoutId)
             .then(data => {
                 setSpinner(false)
                 setWorkout(data)
             })
+        getAllRates(workoutId)
+            .then(data => setAllRates(data))
     }, [])
 
     const handleDeleteWorkout = () => {
@@ -53,8 +57,7 @@ const Workout = () => {
                         </> : ""}
 
                         {canRate && <RatingList setRenderBadge={setRenderBadge} id={workoutId} setRatingArrays={setRatingArrays} />}
-                        <RatingBadge setCanRate={setCanRate} userId={userId} renderBadge={renderBadge} setRenderBadge={setRenderBadge} workoutId={workoutId} setRatingArrays={setRatingArrays} ratingsArray={ratingsArray} workout={workout} />
-                    </div>
+                        {allRates && <RatingBadge setCanRate={setCanRate} userId={userId} allRates={allRates} renderBadge={renderBadge} setRenderBadge={setRenderBadge} workoutId={workoutId} setRatingArrays={setRatingArrays} ratingsArray={ratingsArray} workout={workout} />}                    </div>
                 </Row>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>
                     {workout.workoutExercises?.map((w, i) => <ExerciseCard key={i} {...w} />)}
